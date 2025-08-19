@@ -1,101 +1,179 @@
-<!DOCTYPE html>
-<html lang="id">
+<!DOCTYPE html><html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PAYMENT VANYA OFFICIAL</title>
-    <style>
-        /* Background Fullscreen */
-        body {
-            background: url('/background.png') no-repeat center center fixed;
-            background-size: cover;
-            font-family: Arial, sans-serif;
-            text-align: center;
-            color: white;
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .container {
-            background: rgba(0, 0, 0, 0.7); /* Efek transparan */
-            padding: 20px;
-            border-radius: 10px;
-            width: 90%;
-            max-width: 400px;
-        }
-
-        /* Menyesuaikan ukuran logo QRIS sesuai gambar referensi */
-        .qris {
-            width: 300px; /* Atur sesuai dengan ukuran gambar referensi */
-            height: auto; /* Menyesuaikan proporsi agar tidak terdistorsi */
-            border-radius: 10px;
-        }
-
-        .btn {
-            display: block;
-            width: 250px;
-            margin: 10px auto;
-            padding: 12px;
-            border: none;
-            border-radius: 5px;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-            color: white;
-            text-decoration: none;
-            display: inline-block;
-            text-align: center;
-        }
-
-        .blue { background: #007BFF; }
-        .green { background: #28A745; }
-        .purple { background: #6F42C1; }
-        .btn:hover { opacity: 0.8; }
-
-        /* Tombol Testimoni & Owner */
-        .wide-btn {
-            display: block;
-            width: 90%;
-            max-width: 400px;
-            padding: 15px;
-            margin: 10px auto;
-            font-size: 20px;
-            font-weight: bold;
-            border-radius: 5px;
-            background: #28A745;
-            color: white;
-            text-decoration: none;
-            text-align: center;
-        }
-    </style>
-    <script>
-        function copyToClipboard(number) {
-            navigator.clipboard.writeText(number).then(() => {
-                alert("Nomor " + number + " telah disalin!");
-            }, () => {
-                alert("Gagal menyalin nomor.");
-            });
-        }
-    </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment Page Modern</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: url('https://files.catbox.moe/9j76qy.jpg') no-repeat center center/cover;
+      min-height: 100vh;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+    .overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.35);
+      backdrop-filter: blur(10px);
+    }
+    .card {
+      position: relative;
+      z-index: 1;
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(20px) saturate(180%);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 24px;
+      padding: 32px;
+      max-width: 420px;
+      width: 100%;
+      text-align: center;
+      color: #fff;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+      animation: fadeIn 0.8s ease;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    h2 {
+      margin-bottom: 24px;
+      font-size: 24px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+    .nominal-input {
+      width: 100%;
+      padding: 14px 16px;
+      border-radius: 14px;
+      border: none;
+      outline: none;
+      margin-bottom: 24px;
+      font-size: 16px;
+      font-weight: 500;
+      background: rgba(255,255,255,0.15);
+      color: #fff;
+      backdrop-filter: blur(5px);
+    }
+    .nominal-input::placeholder {
+      color: rgba(255,255,255,0.7);
+    }
+    .method {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 20px;
+      margin: 12px 0;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.12);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .method:hover {
+      background: rgba(255,255,255,0.25);
+      transform: translateY(-2px);
+    }
+    .method span {
+      font-weight: 500;
+      font-size: 16px;
+    }
+    .account {
+      margin-top: 22px;
+      font-size: 16px;
+      font-weight: 500;
+    }
+    .copy-btn {
+      margin-top: 14px;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #2563eb, #3b82f6);
+      color: white;
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .copy-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(37,99,235,0.4);
+    }
+    .qris img {
+      width: 240px;
+      border-radius: 16px;
+      margin-top: 16px;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.35);
+    }
+  </style>
 </head>
 <body>
+  <div class="overlay"></div>
+  <div class="card">
+    <h2>Pilih Metode Pembayaran</h2><input type="number" id="nominal" class="nominal-input" placeholder="Masukkan nominal (Rp)">
 
-<div class="container">
-    <h2>PAYMENT VANYA OFFICIAL</h2>
-    <p>Pilih metode pembayaran:</p>
-    <img src="/qris.png" alt="QRIS Payment" class="qris">
-    
-    <button class="btn blue" onclick="copyToClipboard('087836003228')">Dana</button>
-    <button class="btn green" onclick="copyToClipboard('087836003228')">Gopay</button>
-    <button class="btn purple" onclick="copyToClipboard('087836003228')">OVO</button>
-
-    <a href="https://t.me/Aleya_Zinkai" class="wide-btn">Testimoni</a>
-    <a href="https://t.me/Aleya_Zinkai" class="wide-btn">Owner</a>
+<div class="method" onclick="showAccount('DANA', '087836003228')">
+  <span>DANA</span>
+  <span>›</span>
 </div>
 
-</body>
-</html>
+<div class="method" onclick="showAccount('GOPAY', '087714737838')">
+  <span>GOPAY</span>
+  <span>›</span>
+</div>
+
+<div class="method" onclick="showAccount('OVO', '081233126227')">
+  <span>OVO</span>
+  <span>›</span>
+</div>
+
+<div class="method" onclick="showQRIS()">
+  <span>QRIS</span>
+  <span>›</span>
+</div>
+
+<div class="account" id="account"></div>
+<button class="copy-btn" id="copyBtn" style="display:none;" onclick="copyText()">Salin Nomor</button>
+<div class="qris" id="qris" style="display:none;">
+  <img src="https://files.catbox.moe/bxju6n.jpg" alt="QRIS">
+</div>
+
+  </div>  <script>
+    let currentText = '';
+
+    function showAccount(name, number) {
+      const nominal = document.getElementById('nominal').value;
+      let text = name + ': ' + number;
+      if (nominal) {
+        text += " | Nominal: Rp " + parseInt(nominal).toLocaleString('id-ID');
+      }
+      document.getElementById('account').innerText = text;
+      document.getElementById('account').style.display = 'block';
+      document.getElementById('copyBtn').style.display = 'inline-block';
+      document.getElementById('qris').style.display = 'none';
+      currentText = number;
+    }
+
+    function showQRIS() {
+      const nominal = document.getElementById('nominal').value;
+      let text = 'Scan QRIS di bawah:';
+      if (nominal) {
+        text += " (Nominal: Rp " + parseInt(nominal).toLocaleString('id-ID') + ")";
+      }
+      document.getElementById('account').innerText = text;
+      document.getElementById('account').style.display = 'block';
+      document.getElementById('copyBtn').style.display = 'none';
+      document.getElementById('qris').style.display = 'block';
+      currentText = '';
+    }
+
+    function copyText() {
+      if (currentText) {
+        navigator.clipboard.writeText(currentText);
+        alert('Nomor berhasil disalin: ' + currentText);
+      }
+    }
+  </script></body>
+    </html>
